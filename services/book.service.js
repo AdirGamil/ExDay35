@@ -2,7 +2,7 @@ import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
 const BOOK_KEY = 'bookDB'
-var gFilterBy = { txt: '', minSpeed: 0 }
+var gFilterBy = { txt: '', minAmount: 0 }
 _createBooks()
 
 export const bookService = {
@@ -16,28 +16,14 @@ export const bookService = {
   setFilterBy,
 }
 
-export const bookList = [
-  {
-    id: 'OXeMG8wNskc',
-    title: 'metus hendrerit',
-    description: 'placerat nisi sodales suscipit tellus',
-    thumbnail: 'http://ca.org/books-photos/20.jpg',
-    listPrice: {
-      amount: 109,
-      currencyCode: 'EUR',
-      isOnSale: false,
-    },
-  },
-]
-
 function query() {
   return storageService.query(BOOK_KEY).then((books) => {
     if (gFilterBy.txt) {
       const regex = new RegExp(gFilterBy.txt, 'i')
-      books = books.filter((book) => regex.test(book.vendor))
+      books = books.filter((book) => regex.test(book.title))
     }
-    if (gFilterBy.minSpeed) {
-      books = books.filter((book) => book.maxSpeed >= gFilterBy.minSpeed)
+    if (gFilterBy.minAmount) {
+      books = books.filter((book) => book.maxAmount >= gFilterBy.minAmount)
     }
     return books
   })
@@ -59,8 +45,8 @@ function save(book) {
   }
 }
 
-function getEmptyBook(vendor = '', maxSpeed = 0) {
-  return { id: '', vendor, maxSpeed }
+function getEmptyBook(title = '', maxAmount = 0) {
+  return { id: '', title, maxAmount }
 }
 
 function getFilterBy() {
@@ -69,7 +55,7 @@ function getFilterBy() {
 
 function setFilterBy(filterBy = {}) {
   if (filterBy.txt !== undefined) gFilterBy.txt = filterBy.txt
-  if (filterBy.minSpeed !== undefined) gFilterBy.minSpeed = filterBy.minSpeed
+  if (filterBy.minAmount !== undefined) gFilterBy.minAmount = filterBy.minAmount
   return gFilterBy
 }
 
@@ -93,8 +79,8 @@ function _createBooks() {
   }
 }
 
-function _createBook(vendor, maxSpeed = 250) {
-  const book = getEmptyBook(vendor, maxSpeed)
+function _createBook(title, maxAmount = 250) {
+  const book = getEmptyBook(title, maxAmount)
   book.id = utilService.makeId()
   return book
 }
