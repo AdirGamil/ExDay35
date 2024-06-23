@@ -14,6 +14,7 @@ export const bookService = {
   getNextBookId,
   getFilterBy,
   setFilterBy,
+  getDefaultFilter,
 }
 
 function query() {
@@ -96,3 +97,6 @@ utilService.saveToStorage(BOOK_KEY, books)
 console.log('books', books)
 }
 
+function getDefaultFilter() {
+  return { txt: '', minPrice: '' }
+}

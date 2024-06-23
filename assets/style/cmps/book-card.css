@@ -1,0 +1,5 @@
+.card {
+    background-color: lightcyan;
+    width: 250px;
+    display: grid;
+}
