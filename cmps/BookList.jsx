@@ -11,6 +11,9 @@ export function BookList({ books }) {
           <button>
             <Link to={`/books/${book.id}`}>Details</Link>
           </button>
+          <button>
+            <Link to={`/books/edit/${book.id}`}>Edit</Link>
+          </button>
         </div>
       ))}
     </section>

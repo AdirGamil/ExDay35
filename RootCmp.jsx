@@ -5,6 +5,7 @@ import { Home } from './pages/Home.jsx'
 import { AppHeader } from './cmps/AppHeader.jsx'
 import { AboutUs } from './pages/AboutUs.jsx'
 import { BookIndex } from './pages/BookIndex.jsx'
+import { BookEdit } from './pages/BookEdit.jsx'
 import { BookDetails } from './pages/BookDetails.jsx'
 
 // const { useState } = React
@@ -20,6 +21,8 @@ export function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/books" element={<BookIndex />} />
             <Route path="/books/:bookId" element={<BookDetails />} />
+            <Route path="/books/edit" element={<BookEdit />} />
+            <Route path="/books/edit/:bookId" element={<BookEdit />} />
           </Routes>
         </main>
       </section>
