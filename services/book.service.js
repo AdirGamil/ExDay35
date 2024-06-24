@@ -15,6 +15,10 @@ export const bookService = {
   getFilterBy,
   setFilterBy,
   getDefaultFilter,
+  getEmptyReview,
+  addReview,
+  getReviews,
+  deleteReview,
 }
 
 function query(filter) {
@@ -50,6 +54,37 @@ function getEmptyBook(title = '', maxAmount = 0) {
   return { id: '', title, maxAmount }
 }
 
+function getEmptyReview(name = '', rating = 0) {
+  return { name, rating }
+}
+
+function getReviews(bookId) {
+  return storageService.get(BOOK_KEY, bookId).then((book) => {
+    return book.reviews || []
+  })
+}
+
+function addReview(bookId, review) {
+  return storageService.get(BOOK_KEY, bookId).then((book) => {
+    if (!book.reviews) {
+      book.reviews = []
+    }
+    review.id = utilService.makeId()
+    book.reviews.push(review)
+    return storageService.put(BOOK_KEY, book)
+  })
+}
+
+function deleteReview(bookId, reviewId) {
+  return storageService.get(BOOK_KEY, bookId).then((book) => {
+    if (!book.reviews) {
+      return
+    }
+    book.reviews = book.reviews.filter((review) => review.id !== reviewId)
+    return storageService.put(BOOK_KEY, book)
+  })
+}
+
 function getFilterBy() {
   return { ...gFilterBy }
 }
@@ -69,10 +104,16 @@ function getNextBookId(bookId) {
 }
 
 function _createBooks() {
+  if (utilService.loadFromStorage(BOOK_KEY)) {
+    console.log('Books already exist in storage')
+    return
+  }
+
   const ctgs = ['Love', 'Fiction', 'Poetry', 'Computers', 'Religion']
-  const books = []
+  let books = []
   for (let i = 0; i < 20; i++) {
     const book = {
+      idx: i,
       id: utilService.makeId(),
       title: utilService.makeLorem(2),
       subtitle: utilService.makeLorem(4),
@@ -91,8 +132,9 @@ function _createBooks() {
     }
     books.push(book)
   }
+
   utilService.saveToStorage(BOOK_KEY, books)
-  console.log('books', books)
+  console.log('Initial books created and saved to storage:', books)
 }
 
 function getDefaultFilter() {
