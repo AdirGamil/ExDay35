@@ -1,3 +1,6 @@
+const Router = ReactRouterDOM.HashRouter
+const { Route, Routes, Navigate } = ReactRouterDOM
+
 import { Home } from './pages/Home.jsx'
 import { AboutUs } from './pages/AboutUs.jsx'
 import { BookIndex } from './pages/BookIndex.jsx'
@@ -23,6 +26,7 @@ export function App() {
           </a>
         </nav>
       </header>
+
       <main className="container">
         {page === 'home' && <Home />}
         {page === 'about' && <AboutUs />}
