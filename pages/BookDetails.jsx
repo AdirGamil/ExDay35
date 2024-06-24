@@ -4,13 +4,13 @@ import { bookService } from '../services/book.service.js'
 
 const { useEffect, useState } = React
 
-export function BookDetails({ bookId, onBack }) {
+export function BookDetails() {
   const [book, setBook] = useState(null)
-  const { bookIdd } = useParams()
+  const { bookId } = useParams()
 
   useEffect(() => {
     bookService.get(bookId).then((book) => setBook(book))
-  }, [bookIdd])
+  }, [bookId])
 
   if (!book) return <div>Loading...</div>
 
@@ -30,7 +30,9 @@ export function BookDetails({ bookId, onBack }) {
         List Price: {book.listPrice.amount} {book.listPrice.currencyCode}
       </p>
       <p>Status: {book.listPrice.isOnSale ? 'On Sale' : 'Not on Sale'}</p>
-      <button onClick={onBack}>Back</button>
+      <button>
+        <Link to="/books">Back</Link>
+      </button>
     </section>
   )
 }

@@ -1,15 +1,16 @@
+const { Link } = ReactRouterDOM
+
 import { BookPreview } from '../cmps/BookPreview.jsx'
 
-const { useState } = React
-
-export function BookList({ books, onSelectBookId }) {
-
+export function BookList({ books }) {
   return (
     <section className="books-list">
       {books.map((book) => (
         <div key={book.id}>
           <BookPreview book={book} />
-          <button onClick={() => onSelectBookId(book.id)}>Details</button>
+          <button>
+            <Link to={`/books/${book.id}`}>Details</Link>
+          </button>
         </div>
       ))}
     </section>
