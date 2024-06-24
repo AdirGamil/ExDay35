@@ -41,6 +41,9 @@ function get(bookId) {
 function remove(bookId) {
   return storageService.remove(BOOK_KEY, bookId)
 }
+function removeR(bookId) {
+  return storageService.remove(BOOK_KEY, bookId)
+}
 
 function save(book) {
   if (book.id) {

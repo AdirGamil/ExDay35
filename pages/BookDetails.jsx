@@ -31,15 +31,13 @@ export function BookDetails() {
 
   if (!book) return <div>Loading...</div>
 
-  // const currentBook = books[currentIndex];
-  // const previousBook = books[currentIndex - 1 < 0 ? books.length - 1 : currentIndex - 1];
-  // const nextBook = books[(currentIndex + 1) % books.length];
+
 
   return (
     <section className="book-details">
       <h1>Title: {book.title}</h1>
       <p>ID: {book.id}</p>
-      <p>IDX: {book.idx}</p>
+      {/* <p>IDX: {book.idx}</p> */}
       <p>Subtitle: {book.subtitle}</p>
       <p>Authors: {book.authors.join(', ')}</p>
       <p>Published Date: {book.publishedDate}</p>
@@ -58,10 +56,6 @@ export function BookDetails() {
       </button>
 
       <button>
-        <Link to={`/books/${book.idx}`}>Next</Link>
-      </button>
-
-      <button>
         <Link to={`/books/review/${book.id}`}>Add Review</Link>
       </button>
 
@@ -74,7 +68,7 @@ export function BookDetails() {
                 <p>Reviewer: {review.fullname}</p>
                 <p>Rating: {review.rating}</p>
                 <p>Read At: {review.readAt}</p>
-                <button onClick={() => deleteReview(review.id)}>Delete</button>
+                <button onClick={() => console.log(bookService.removeR(review.id))}>Delete</button>
               </li>
             ))}
           </ul>
