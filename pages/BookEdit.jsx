@@ -63,6 +63,7 @@ export function BookEdit() {
   } = bookToEdit
   return (
     <section className="book-edit-container">
+      <h1>{bookId ? 'Edit':'Add'} Book</h1>
       <form onSubmit={onSaveBook}>
         <label htmlFor="title">Title</label>
         <input

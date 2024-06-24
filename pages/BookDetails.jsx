@@ -1,6 +1,7 @@
 const { useParams, Link } = ReactRouterDOM
 
 import { bookService } from '../services/book.service.js'
+import { AddReview } from '../cmps/AddReview.jsx'
 
 const { useEffect, useState } = React
 
@@ -30,8 +31,13 @@ export function BookDetails() {
         List Price: {book.listPrice.amount} {book.listPrice.currencyCode}
       </p>
       <p>Status: {book.listPrice.isOnSale ? 'On Sale' : 'Not on Sale'}</p>
+
+      
       <button>
         <Link to="/books">Back</Link>
+      </button>
+      <button>
+      <Link to={`/books/review/${book.id}`}>Add Review</Link>
       </button>
     </section>
   )
