@@ -27,9 +27,11 @@ function query(filter) {
       const regex = new RegExp(filter.txt, 'i')
       books = books.filter((book) => regex.test(book.title))
     }
-    if (filter.price) {
-      books = books.filter((book) => book.listPrice.amount >= filter.price)
+
+    if (filter.minPrice) {
+      books = books.filter((book) => book.listPrice.amount >= filter.minPrice)
     }
+
     return books
   })
 }
@@ -39,9 +41,6 @@ function get(bookId) {
 }
 
 function remove(bookId) {
-  return storageService.remove(BOOK_KEY, bookId)
-}
-function removeR(bookId) {
   return storageService.remove(BOOK_KEY, bookId)
 }
 
