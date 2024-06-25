@@ -5,9 +5,9 @@ export function Chart({ data }) {
         <li key={item.category}>
           <span
             title={`${item.category}: ${item.count} books`}
-            style={{ height: item.count + '%' }}
+            style={{ height: item.count * 10 + '%' }}
           >
-            {item.count + '%'}
+            {item.count}
           </span>
         </li>
       ))}
