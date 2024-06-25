@@ -19,9 +19,11 @@ export const bookService = {
   addReview,
   getReviews,
   deleteReview,
+  getCategoryStats,
+  getFilterFromSearchParams,
 }
 
-function query(filter) {
+function query(filter = { txt: '', minPrice: 0 }) {
   return storageService.query(BOOK_KEY).then((books) => {
     if (filter.txt) {
       const regex = new RegExp(filter.txt, 'i')
@@ -141,4 +143,30 @@ function _createBooks() {
 
 function getDefaultFilter() {
   return { txt: '', minPrice: '' }
+}
+
+function getFilterFromSearchParams(searchParams) {
+  const defaultFilter = getDefaultFilter()
+  const filterBy = {}
+  for (const field in defaultFilter) {
+    filterBy[field] = searchParams.get(field) || ''
+  }
+  return filterBy
+}
+
+function getCategoryStats() {
+  return query().then((books) => {
+    const categoryStats = books.reduce((acc, book) => {
+      book.categories.forEach((category) => {
+        if (!acc[category]) acc[category] = 0
+        acc[category]++
+      })
+      return acc
+    }, {})
+
+    return Object.keys(categoryStats).map((category) => ({
+      category,
+      count: categoryStats[category],
+    }))
+  })
 }
