@@ -110,16 +110,6 @@ export function AddReview() {
           handleChange={handleChange}
           rating={rating}
         />
-
-        {/* {cmpType === 'select' && (
-          <SelectRating handleChange={handleChange} rating={rating} />
-        )}
-        {cmpType === 'numInput' && (
-          <NumInputRating handleChange={handleChange} rating={rating} />
-        )}
-        {cmpType === 'stars' && (
-          <StarRating handleChange={handleChange} rating={rating} />
-        )} */}
         <button type="submit">Add Review</button>
       </form>
     </section>
@@ -129,20 +119,11 @@ export function AddReview() {
 function DynamicCmp(props) {
   switch (props.cmpType) {
     case 'select':
-      return (
-        <SelectRating handleChange={props.handleChange} rating={props.rating} />
-      )
+      return <SelectRating {...props} />
     case 'numInput':
-      return (
-        <NumInputRating
-          handleChange={props.handleChange}
-          rating={props.rating}
-        />
-      )
+      return <NumInputRating {...props} />
     case 'stars':
-      return (
-        <StarRating handleChange={props.handleChange} rating={props.rating} />
-      )
+      return <StarRating {...props} />
     default:
       return null
   }
