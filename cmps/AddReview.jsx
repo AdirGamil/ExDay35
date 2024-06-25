@@ -62,7 +62,7 @@ export function AddReview() {
           type="text"
           id="fullname"
           name="fullname"
-          value={fullname}
+          // value={fullname}
           onChange={handleChange}
         />
 
@@ -101,7 +101,7 @@ export function AddReview() {
           type="date"
           id="readAt"
           name="readAt"
-          value={readAt}
+          // value={readAt}
           onChange={handleChange}
         />
 
