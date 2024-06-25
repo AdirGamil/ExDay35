@@ -21,6 +21,7 @@ export const bookService = {
   deleteReview,
   getCategoryStats,
   getFilterFromSearchParams,
+  _setNextPrevBookId,
 }
 
 function query(filter = { txt: '', minPrice: 0 }) {
@@ -38,8 +39,17 @@ function query(filter = { txt: '', minPrice: 0 }) {
   })
 }
 
+// function get(bookId) {
+//   return storageService.get(BOOK_KEY, bookId)
+
+// }
+
 function get(bookId) {
   return storageService.get(BOOK_KEY, bookId)
+      .then(book => {
+          book = _setNextPrevBookId(book)
+          return book
+      })
 }
 
 function remove(bookId) {
@@ -168,5 +178,18 @@ function getCategoryStats() {
       category,
       count: categoryStats[category],
     }))
+  })
+}
+
+function _setNextPrevBookId(book) {
+  return storageService.query(BOOK_KEY).then((books) => {
+    const bookIdx = books.findIndex((currBook) => currBook.id === book.id)
+    const nextBook = books[bookIdx + 1] ? books[bookIdx + 1] : books[0]
+    const prevBook = books[bookIdx - 1]
+      ? books[bookIdx - 1]
+      : books[books.length - 1]
+    book.nextBookId = nextBook.id
+    book.prevBookId = prevBook.id
+    return book
   })
 }

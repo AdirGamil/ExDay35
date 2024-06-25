@@ -1,5 +1,4 @@
 const { useParams, Link } = ReactRouterDOM
-
 const { useEffect, useState } = React
 
 import { bookService } from '../services/book.service.js'
@@ -8,30 +7,29 @@ import { AddReview } from '../cmps/AddReview.jsx'
 export function BookDetails() {
   const [book, setBook] = useState(null)
   const [reviews, setReviews] = useState([])
-  const { bookId } = useParams()
+  const params = useParams()
 
   useEffect(() => {
     loadBook()
     loadReviews()
-  }, [bookId])
+  }, [params.bookId])
 
   function loadBook() {
     bookService
-      .get(bookId)
+      .get(params.bookId)
       .then((book) => setBook(book))
       .catch((err) => console.error('Error loading book:', err))
   }
+  
 
   function loadReviews() {
     bookService
-      .getReviews(bookId)
+      .getReviews(params.bookId)
       .then((reviews) => setReviews(reviews))
       .catch((err) => console.error('Error loading reviews:', err))
   }
 
   if (!book) return <div>Loading...</div>
-
-
 
   return (
     <section className="book-details">
@@ -54,6 +52,12 @@ export function BookDetails() {
       <button>
         <Link to="/books">Back</Link>
       </button>
+      <button>
+        <Link to={`/books/${book.nextBookId}`}>Next Book</Link> |
+      </button>
+      <button>
+        <Link to={`/books/${book.prevBookId}`}>Previous Book</Link>
+      </button>
 
       <button>
         <Link to={`/books/review/${book.id}`}>Add Review</Link>
@@ -68,7 +72,11 @@ export function BookDetails() {
                 <p>Reviewer: {review.fullname}</p>
                 <p>Rating: {review.rating}</p>
                 <p>Read At: {review.readAt}</p>
-                <button onClick={() => console.log(bookService.removeR(review.id))}>Delete</button>
+                <button
+                  onClick={() => console.log(bookService.removeR(review.id))}
+                >
+                  Delete
+                </button>
               </li>
             ))}
           </ul>
